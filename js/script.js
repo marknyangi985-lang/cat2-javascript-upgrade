@@ -50,21 +50,19 @@ const wishlistInput = document.querySelector("#wishlist-input");
 const wishlistAddBtn = document.querySelector("#wishlist-add-btn");
 const wishlistList = document.querySelector("#wishlist-list");
 
-wishlistAddBtn.addEventListener("click", () => {
-  const itemText = wishlistInput.value.trim();
-
+let wishlistItems = JSON.parse(localStorage.getItem("wishlistItems")) || [];
   
-  if (itemText === "") {
-    return;
+  function saveWishlist() {
+    localStorage.setItem("wishlistItems", JSON.stringify(wishlistItems));
   }
 
+  function createWishlistItem(itemText) {
+    const listItem = document.createElement("li");
+    listItem.classList.add("wishlist-item");
 
-  const listItem = document.createElement("li");
-  listItem.classList.add("wishlist-item");
-
-  
-  const itemName = document.createElement("span");
-  itemName.textContent = itemText;
+    const itemName = document.createElement("span");
+    itemName.textContent = itemText;
+   
 
   
   const removeBtn = document.createElement("button");
@@ -73,39 +71,64 @@ wishlistAddBtn.addEventListener("click", () => {
 
   
   removeBtn.addEventListener("click", () => {
+    const index = wishlistItems.indexOf(itemText);
+    if (index > -1) {
+      wishlistItems.splice(index, 1);
+      saveWishlist();
+    }
     listItem.remove();
   });
 
   
   listItem.appendChild(itemName);
   listItem.appendChild(removeBtn);
-  wishlistList.appendChild(listItem);
-
+  return listItem;
+  }
   
-  wishlistInput.value = "";
+ wishlistItems.forEach(itemText => {
+  wishlistList.appendChild(createWishlistItem(itemText));
+
+ });
+
+wishlistAddBtn.addEventListener("click", () => {
+  const itemText = wishlistInput.value.trim();
+
+  if (itemText === "") {
+    return ;
+  }
+
+    wishlistItems.push(itemText);
+    saveWishlist();
+
+    wishlistList.appendChild(createWishlistItem(itemText));
+
+    wishlistInput.value = "";
+  
 });
 
 
+
 const signupForm = document.querySelector("#signup-form");
-const signupNameInput = document.querySelector("#signup-name");
-const signupEmailInput = document.querySelector("#signup-email");
 const signupFeedback = document.querySelector("#signup-feedback");
+
+signupForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+const nameValue = document.querySelector("#signup-name").value.trim();
+const emailValue = document.querySelector("#signup-email").value.trim();
+
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-signupForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+if (nameValue === "" || emailValue === "") {
+  signupFeedback.textContent = "Please enter both your name and email.";
+  signupFeedback.style.color = "red";
+  return;
+}
 
-  const name = signupNameInput.value.trim();
-  const email = signupEmailInput.value.trim();
 
-  if (name === "" || email === "") {
-    signupFeedback.textContent = "Please enter both your name and email.";
-    signupFeedback.style.color = "red";
-    return;
-  }
-
-  if (!emailPattern.test(email)) {
+  
+  if (!emailPattern.test(emailValue)) {
     signupFeedback.textContent = "Please enter a valid email address.";
     signupFeedback.style.color = "red";
     return;
@@ -114,8 +137,7 @@ signupForm.addEventListener("submit", (e) => {
   signupFeedback.textContent = "Successful sign up. Thank you!";
   signupFeedback.style.color = "green";
 
-  signupNameInput.value = "";
-  signupEmailInput.value = "";
+  signupForm.reset();
 }); 
 
 
