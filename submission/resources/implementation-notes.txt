@@ -1,0 +1,37 @@
+Implementation Notes — Cat 2 JavaScript Upgrade
+PAVELLE PJ's
+
+-Loop-Rendered Dynamic Content
+   Product listings are stored in a JavaScript array of objects (products), each
+   with a name, description, image, and price. The array is looped over using
+   forEach(), which uses createElement() and innerHTML to build each product
+   card and appendChild() to insert it into the #product-list container. No
+   product markup is hardcoded in the HTML.
+
+-Dynamically Add & Remove Elements (Wishlist)
+   Users can type an item into an input field and click "Add" to add it to a
+   wishlist. Each new item is built with createElement() and appendChild(),
+   and includes its own "Remove" button that deletes just that item using
+   remove().
+
+-Form Handling with Validation Feedback
+   A mailing list signup form uses event.preventDefault() to stop the page
+   from reloading on submit, and reads user input with .value. The name and
+   email fields are validated in JavaScript (checking for empty fields and
+   testing the email against a regex pattern), with feedback written back to
+   the page via textContent — red for rejected submissions, green for
+   successful ones.
+
+-Persistent State with localStorage
+   Wishlist items are saved to localStorage whenever an item is added or
+   removed, using JSON.stringify() to store the array and JSON.parse() to
+   restore it. On page load, any previously saved wishlist items are
+   automatically re-rendered, so the wishlist survives a page refresh.
+
+-Click-to-Reveal on Banner
+   Clicking the banner image toggles a "visible" class on an overlay div
+   using classList.toggle(). When the class is present, CSS displays a
+   caption over the banner; clicking again removes the class and hides it.
+
+HTML/CSS were edited as needed to accommodate these features, including
+adding a wishlist section, a signup form section, and a banner overlay div.
