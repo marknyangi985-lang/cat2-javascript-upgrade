@@ -3,7 +3,7 @@ const products = [
   {
     name: "Cozy Cotton Pajama Set",
     description: "Soft and breathable cotton pajamas for a comfortable night's sleep.",
-    image: "images/Screenshot 2026-05-29 210518.png",
+    image: "images/Screenshot 2026-05-29 210507.png",
     price: "800sh"
   },
   {
@@ -84,3 +84,39 @@ wishlistAddBtn.addEventListener("click", () => {
   
   wishlistInput.value = "";
 });
+
+
+const signupForm = document.querySelector("#signup-form");
+const signupNameInput = document.querySelector("#signup-name");
+const signupEmailInput = document.querySelector("#signup-email");
+const signupFeedback = document.querySelector("#signup-feedback");
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+signupForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const name = signupNameInput.value.trim();
+  const email = signupEmailInput.value.trim();
+
+  if (name === "" || email === "") {
+    signupFeedback.textContent = "Please enter both your name and email.";
+    signupFeedback.style.color = "red";
+    return;
+  }
+
+  if (!emailPattern.test(email)) {
+    signupFeedback.textContent = "Please enter a valid email address.";
+    signupFeedback.style.color = "red";
+    return;
+  }
+
+  signupFeedback.textContent = "Successful sign up. Thank you!";
+  signupFeedback.style.color = "green";
+
+  signupNameInput.value = "";
+  signupEmailInput.value = "";
+}); 
+
+
+

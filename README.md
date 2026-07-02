@@ -109,7 +109,7 @@ You must commit and push to **both** `classroom` and `origin` after completing a
 git add .
 git commit -m "Add dynamic add/remove items feature"
 git push classroom main
-git push origin main
+git push origin main 
 ```
 
 Minimum expected push history: 1 baseline commit + 5 feature commits (one per required item) = **at least 6 pushes to each remote**. Your commit history is part of how genuine, incremental progress is assessed — a single commit dumped right before the deadline will be flagged.
