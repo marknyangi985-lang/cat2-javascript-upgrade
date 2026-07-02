@@ -140,5 +140,13 @@ if (nameValue === "" || emailValue === "") {
   signupForm.reset();
 }); 
 
+const banner= document.querySelector("#banner");
+const bannerOverlay= document.querySelector("#banner-overlay");
+
+banner.addEventListener("click", () => {
+  bannerOverlay.classList.toggle("visible");
+});
+
+
 
 

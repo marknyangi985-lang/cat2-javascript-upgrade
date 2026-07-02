@@ -271,5 +271,26 @@ footer{
    object-fit: cover;
 }
 
+.banner {
+    position: relative;
+    cursor: pointer;
+}
+
+.banner-overlay {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.banner-overlay.visible {
+    display: block;
+}
+
 
 
